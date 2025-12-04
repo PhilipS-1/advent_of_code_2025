@@ -18,5 +18,6 @@ solve2 = sum . map (read . findLargest 12) . lines
 findLargest :: Int -> String ->  String  
 findLargest 0 _ = ""
 -- findLargest _ "" = ""
-findLargest n line = maxDigit : findLargest (n-1) (tail (dropWhile (/= maxDigit) line)) 
+findLargest n line = maxDigit : findLargest (n-1) restOfList
     where maxDigit = maximum $ take (length line - (n - 1)) line 
+          restOfList = tail (dropWhile (/= maxDigit) line) 
