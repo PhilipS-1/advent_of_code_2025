@@ -18,7 +18,6 @@ solve1 =  sum . map read . filter (\s -> s =~ pattern ) . concatMap (\s -> range
 
 solve2 :: String -> Int  
 solve2 =  
-    sum . map read . 
-    filter (\s -> s =~ pattern ) . concatMap (\s -> rangeToList s) . splitOn ","
+    sum . map read . filter (\s -> s =~ pattern ) . concatMap (\s -> rangeToList s) . splitOn ","
     where rangeToList  = map show . (\([start,end]) -> [start..end]) . map (\s -> read s :: Int) . splitOn "-"
           pattern = "^(\\d+)\\1{1,}$"
