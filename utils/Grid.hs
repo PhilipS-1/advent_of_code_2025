@@ -1,7 +1,8 @@
 module Grid (
-    Grid(..), 
+    Grid(..),
+    Coord, 
     fromList, ofSize, size, get, inBounds, coordinates, values,
-    cardinalDirections, allDirections, getNeighborCoordinates, getNeighborValues
+    cardinalDirections, allDirections, getNeighborCoordinates, getNeighborValues, updateGrid
 ) where
 
 import Data.Maybe
@@ -50,3 +51,16 @@ getNeighborCoordinates grid directions (r,c) = filter (inBounds grid) $ map (\(d
 getNeighborValues :: Grid a -> [Coord] -> Coord -> [a]
 getNeighborValues grid directions (r,c) = mapMaybe (get grid) neighbors 
     where neighbors = getNeighborCoordinates grid directions (r,c)
+
+
+updateGrid ::  Grid a -- grid to update
+                   -> [Coord] --List of coords to update
+                   -> a --value to update to
+                   -> Grid a --updated grid 
+updateGrid grid coordsToUpdate newValue = zipWith updateRow [0..] grid 
+    where 
+          updateRow rowIndex row = zipWith (setCellValue rowIndex) [0..] row
+          setCellValue r c currentValue
+            | (r,c) `elem` coordsToUpdate = newValue 
+            | otherwise = currentValue 
+
