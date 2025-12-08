@@ -18,21 +18,12 @@ solve1 grid = length $ filter isAccessable $ map (Grid.getNeighborValues grid Gr
           hasPaperRoll cell = Grid.get grid cell == Just '@'
           isAccessable neighbors =  (4 >) $ length $ filter (== '@') neighbors
 
--- solve2 :: Grid Char -> Int  -> Int 
--- solve2 grid count
---     | 0 == countAccessable grid = count 
---     | otherwise = solve2 (removeAccessable grid) (count + countAccessable grid)
---     where countAccessable = solve1
---           removeAccessable = updateGrid cellsToRemove '.'
---             where cellsToRemove = filter (map (4 >) . length . filter (== '@') getNeighborCells) $ filter (Grid.get grid cell == Just '@') allCoords
---                   getNeighborCells = Grid.getNeighborValues grid Grid.allDirections
-
 solve2 :: Grid Char -> Int  -> Int 
 solve2 grid count
     | 0 == countAccessable grid = count 
     | otherwise = solve2 updatedGrid (count + countAccessable grid)
     where countAccessable = solve1
-          updatedGrid = updateGrid grid (cellsToRemove grid) '.'
+          updatedGrid = Grid.updateGrid grid (cellsToRemove grid) '.'
 
 cellsToRemove :: Grid Char -> [Coord]
 cellsToRemove grid = filter isAccessible $ filter hasPaperRoll allCoords
