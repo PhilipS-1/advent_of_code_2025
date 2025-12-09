@@ -37,7 +37,7 @@ parseOp "*" = (*)
 
 parseInput2 :: String -> [[String]]
 parseInput2 = splitWhen (== "") . map strip . transpose . lines 
--- output = [["1  *","24","356"],["369+","248","8"],["32*","581","175"],["623+","431","4"]]
+-- = [["1  *","24","356"],["369+","248","8"],["32*","581","175"],["623+","431","4"]]
 
 solve2 :: [[String]] -> Int 
 solve2 = foldr calcEq2 0 
